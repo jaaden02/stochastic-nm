@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\begin{document}
+
+    \title{Monte-Carlo Methods for Parabolic PDEs -- Core Conclusions}
+
+    \subsection*{1. PDE-SDE Correspondence}
+
+    \begin{itemize}
+        \item Linear second-order parabolic PDEs correspond to SDEs through the shared generator
+        \[
+            \mathcal L = a(x)\,\partial_x + \tfrac12 \sigma^2(x)\,\partial_{xx}.
+        \]
+        \item \textbf{Forward direction (SDE $\rightarrow$ Fokker--Planck):}
+        The density of the SDE satisfies the Fokker--Planck equation
+        \[
+            \partial_t p = \mathcal L^\ast p.
+        \]
+        \item \textbf{Backward direction (PDE $\rightarrow$ SDE):}
+        Feynman--Kac represents the PDE solution as an expectation over the associated SDE.
+    \end{itemize}
+
+    \subsection*{2. Monte-Carlo Solution Strategy}
+
+    \begin{enumerate}
+        \item Map the PDE to its associated SDE.
+        \item Simulate many independent SDE trajectories.
+        \item Compute the functional dictated by the PDE (terminal payoff, exponential weight, or empirical density).
+        \item Average over samples.
+    \end{enumerate}
+
+    \subsection*{3. Distinguish Two PDE Types}
+
+    \paragraph{Fokker--Planck PDE.}
+    The solution is a probability density.  
+    Solve via Monte-Carlo by simulating the SDE and estimating the density of endpoints using a histogram or kernel estimator.
+
+    \paragraph{General linear parabolic PDE.}
+    The solution is not a density.  
+    Monte-Carlo uses the Feynman--Kac representation:
+    \[
+    u(x,t) = \mathbb E\Big[f(X_T)\exp\Big(-\int_t^T V(X_s)\,ds\Big)\,\Big|\,X_t = x\Big].
+    \]
+
+    \subsection*{4. Euler--Maruyama vs. Milstein}
+
+    \begin{itemize}
+        \item \textbf{Euler--Maruyama:} strong order $1/2$, weak order $1$; simplest and cheapest.
+        \item \textbf{Milstein:} strong order $1$ (higher), weak order $1$ (same as EM); requires $\sigma'(x)$.
+    \end{itemize}
+
+    For Fokker--Planck Monte-Carlo:
+    \begin{itemize}
+        \item The goal is a \emph{weak} quantity (density/expectation).
+        \item Both schemes have weak order $1$, so Milstein does not improve the convergence rate of the density.
+        \item \textbf{Default choice: Euler--Maruyama.}
+    \end{itemize}
+
+    \subsection*{5. Practical Notes}
+
+    \begin{itemize}
+        \item Boundary handling (absorbing/reflecting) is often the dominant source of bias.
+        \item If positivity must be preserved, naive EM/Milstein may fail; use tailored schemes.
+        \item For density estimation, investing in more samples or smaller step size is typically more effective than using Milstein.
+    \end{itemize}
+
+\end{document}
