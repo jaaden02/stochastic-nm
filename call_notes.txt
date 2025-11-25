@@ -1,0 +1,14 @@
+- Boundary condition at Z = 0: Break
+    - Whenever A plancton reaches Z = 0 it is no longer considered at later times
+    - 
+    - Should we add in a suppresion term at z = 0
+
+
+- Diffusion Matrix: 
+    - 
+
+
+- What is the right Diffusion?
+    - 
+
+- Whenev
