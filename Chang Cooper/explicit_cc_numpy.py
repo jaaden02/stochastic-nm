@@ -12,7 +12,7 @@ alpha = 0.1
 v0 = 0.01
 vg = 0
 psi = np.inf
-D0 = 0.0001
+D0 = 0.3
 
 # ========== Vectorized Drift and Diffusion Functions ==========
 
@@ -34,6 +34,7 @@ def var_vec(X, Z, PHI, t):
     """Vectorized noise intensity"""
     # TODO: Is it not like PHI
     return D0 * np.ones_like(X)
+
 
 # ========== Helper Functions ==========
 
@@ -239,7 +240,7 @@ def check_cfl_condition(x_grid, z_grid, phi_grid, dt, t=0):
     dz = z_grid[1] - z_grid[0]
     dphi = phi_grid[1] - phi_grid[0]
     
-    D_max = 0.5 * 0.3**2  # var_fun returns 0.3
+    D_max = 0.5 * D0**2  # var_fun returns 0.3
     
     if D_max > 0:
         dt_max_x = dx**2 / (2 * D_max)
@@ -388,7 +389,7 @@ if __name__ == "__main__":
     # Initial condition: localized Gaussian
     X, Z, PHI = np.meshgrid(x_grid, z_grid, phi_grid, indexing='ij')
     x0, z0, phi0 = 0.0, -1.0, np.pi
-    sigma_init = 0.5
+    sigma_init = 0.1
     
     f0 = np.exp(-((X-x0)**2 + (Z-z0)**2 + (PHI-phi0)**2)/(2*sigma_init**2))
     f0 = f0 / (np.sum(f0) * dx * dz * dphi)
@@ -397,7 +398,7 @@ if __name__ == "__main__":
     print()
     
     # Time setup - use smaller dt for stability
-    t_final = 2.0
+    t_final = 3.0
     dt = 0.0005  # Reduced from 0.001 for better stability
     Nt = int(t_final / dt) + 1
     t_array = np.linspace(0, t_final, Nt)
