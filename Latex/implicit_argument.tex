@@ -1,0 +1,38 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, physics, geometry}
+\geometry{margin=2.5cm}
+
+\begin{document}
+
+Upwind is used because the equation contains \emph{advection} in \(x\) and \(z\), and an explicit scheme must control numerical instability from drift. Leapfrog is a \emph{centered, second-order, nondissipative} method. For advection it is \emph{unconditionally unstable unless paired with special staggering} (Yee grid / Lax--Wendroff stabilization). A 3D FP code with general drifts cannot use leapfrog safely. Upwind guarantees monotonicity and positivity of the advected density; leapfrog does not.
+
+Implicitness enters only where the stability restriction is severe, i.e.\ diffusion in \(\phi\). The advection CFL is typically mild; diffusion CFL is the tight constraint. This is why Chang--Cooper is often embedded in a \emph{semi-implicit} update:
+\begin{itemize}
+    \item Explicit advection (cheap, first-order).
+    \item Implicit or semi-implicit diffusion (removes the \(\Delta t \le \Delta\phi^2/(2D_0)\) limit).
+\end{itemize}
+
+Full implicitness requires solving a \emph{3D linear system} of size \(N_x N_z N_\phi\); this is computationally inefficient unless the grid is extremely small. The operator is not separable when drifts depend on the state, and one loses the simplicity of the flux form.
+
+The only part where implicitness is rational:
+\begin{itemize}
+    \item diffusion in \(\phi\), because it is one-dimensional along axis 2 and leads to \emph{tridiagonal systems for each \((x,z)\)}, solvable by the Thomas algorithm at negligible cost.
+\end{itemize}
+
+Applying the same logic to advection is not useful: implicit upwind offers no meaningful advantage, and implicit centered schemes require limiters or TVD corrections, destroying the benefit of the flux form.
+
+\medskip
+\noindent\textbf{Minimal viable improvement:}
+\begin{itemize}
+    \item Keep \(x,z\) advection \emph{explicit upwind}.
+    \item Keep Chang--Cooper for drift in \(\phi\).
+    \item Replace the explicit diffusive term
+    \[
+    -D\,\frac{f_{k+1} - 2 f_k + f_{k-1}}{\Delta\phi^2}
+    \]
+    with an \emph{implicit} (or Crank--Nicolson) tridiagonal solve along \(\phi\).
+\end{itemize}
+
+This relaxes the diffusion CFL while preserving positivity and the stationary distribution. Full implicitness is computationally wasteful; semi-implicit treatment in \(\phi\) is optimal.
+
+\end{document}
