@@ -14,3 +14,35 @@
 - justifying the choices we make i.e. step size, forward vs backward differences
 - should we do adaptive mesh refinement?
 - we need to explain the dimensions of the plot and what the numbers mean
+
+  ### Slides
+
+  1) Determistic Article:
+     Why this model
+     Explaining equations
+  2) Plots of deterministic w different starting conditions:
+     brief, also numerical methods here !eliminating some paths cause they go to zero
+  3) Adding noise:
+     explain why a stochastic, and why only on phi
+     how to add this to the original equations
+     and numerical
+  4) Show average in manypaths stochastic
+     2 different D
+     choose aboute the final D, physical meaning and plankton layer
+  5) FP theory
+     from SDEs to FP
+  6) Our langevin to FP
+     splitting the differential operator advection + diffusion
+  7) Crank - Nicolson
+     just show the generic scheme, briefly proprietes of CN and why we use it
+  8) Chang Cooper
+     same but more theory to explain it
+     cite the article
+  9) Comparing all 4 results
+      we already said that SDE and FP should be the same
+     deterministic + langevin + CN * CC
+  10) Conclusions
+      comparing the three different methods
+      use langevin lol
+      if we can conclusion on the physics
+  11... Appendix
