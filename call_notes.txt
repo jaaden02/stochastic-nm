@@ -12,3 +12,16 @@
     - 
 
 - Whenev
+
+
+
+Slides:
+
+- Deterministic -> model Theory microswimmer 1 Slide
+- Stochastic Additon -> euler maruyama -> many Paths -> averages 
+- Fokker Planck Theory -> FP our situation
+- Numerical Schemes -> discretization
+- Chang Cooper
+- comparison of all results.
+
+1 Slide Deterministic
