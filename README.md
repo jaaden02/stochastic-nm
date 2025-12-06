@@ -17,7 +17,9 @@
 
 # Slides
 
-  1) ### Determistic Article:
+  1) ### Title
+
+  2) ### Determistic Article:
      
      Why this model
      
@@ -27,7 +29,7 @@
      
      brief, also numerical methods here !eliminating some paths cause they go to zero
   
-  5) Adding noise:
+  4) ### Adding noise:
    
      explain why a stochastic, and why only on phi
 
@@ -35,37 +37,37 @@
 
      and numerical
  
-  7) Show average in manypaths stochastic
+  5) ### Show average in manypaths stochastic
 
      2 different D
 
      choose aboute the final D, physical meaning and plankton layer
   
-  9) FP theory
+  6) ### FP theory
   
      from SDEs to FP
   
-  10) Our langevin to FP
+  7) ### Our langevin to FP
   
      splitting the differential operator advection + diffusion
   
-  11) Crank - Nicolson
+  8) ### Crank - Nicolson
   
      just show the generic scheme, briefly proprietes of CN and why we use it
   
-  12) Chang Cooper
+  9) ### Chang Cooper
   
      same but more theory to explain it
      
      cite the article
   
-  13) Comparing all 4 results
+  10) ### Comparing all 4 results
   
       we already said that SDE and FP should be the same
 
       deterministic + langevin + CN * CC
   
-  15) Conclusions
+  11) ### Conclusions
    
       comparing the three different methods
 
@@ -73,4 +75,4 @@
 
       if we can conclusion on the physics
   
-  11... Appendix
+  12... Appendix
