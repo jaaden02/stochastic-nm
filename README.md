@@ -17,7 +17,7 @@
 
   ### Slides
 
-  1) Determistic Article:
+  1) Determistic Article: \\
      Why this model
      Explaining equations
   2) Plots of deterministic w different starting conditions:
