@@ -1,0 +1,45 @@
+============================================================
+VECTORIZED 3D FOKKER-PLANCK SOLVER
+============================================================
+Grid: 80×50×50 = 200,000 cells
+Resolution: dx=0.759, dz=0.102, dφ=0.128
+x in [0, 60], z in [-5, 0], φ in [0, 6.283185307179586]
+Diffusion D0 = 0.01
+Initial ∫f = 1.000000
+
+Time: t ∈ [0, 80], dt=1.0000e-01, Nt=801
+Total Memory needed: 0.64 GB (float32)
+------------------------------
+CFL Stability Analysis (dt = 1.00e-01)
+------------------------------
+Advection Limits (dt < ...):
+  X:   3.62e+00 (v=2.10e-01)
+  Z:   9.28e-01 (v=1.10e-01)
+  Phi: 2.11e+00 (v=6.08e-02) <--- Check this!
+Diffusion Limits (dt < ...):
+  Phi: 8.22e-01
+------------------------------
+Combined Max Stable dt: 3.28e-01
+✅ STABLE
+
+Allocating solution array: 611.1 MB
+Starting Solver. BCs: X='open', Z='open'. Steps: 801
+Step 1/800, t=0.0000, ∫f=1.000000
+Step 100/800, t=9.9000, ∫f=1.000000
+Step 200/800, t=19.9000, ∫f=1.000000
+Step 300/800, t=29.9000, ∫f=0.999997
+Step 400/800, t=39.9000, ∫f=0.999959
+Step 500/800, t=49.9000, ∫f=0.999741
+Step 600/800, t=59.9000, ∫f=0.999031
+Step 700/800, t=69.9000, ∫f=0.997143
+Step 800/800, t=79.9000, ∫f=0.993514
+
+============================================================
+✓ Done! Solution shape: (801, 80, 50, 50)
+Final ∫f = 0.993514
+Computation time: 33.59 seconds
+   (0.0419 sec/step, 4.77 Mcells/sec)
+============================================================
+
+Generating summary plots...
+Done

@@ -1,0 +1,5 @@
+*.npz
+*.npy
+*.gif
+__pycache__/
+.ipynb_checkpoints/
