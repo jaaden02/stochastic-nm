@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\begin{document}
+    \section{Numerical Viscosity and Grid Resolution Analysis}
+
+    \subsection{Origin of Numerical Viscosity}
+    In finite volume or finite difference schemes employing first-order upwinding (such as the Chang-Cooper scheme in the high-Péclet limit), the discretization of the advection term introduces a truncation error that behaves mathematically like a diffusion term. This phenomenon is known as \textit{Numerical Viscosity} or \textit{Artificial Diffusion}.
+
+    Consider the 1D advection-diffusion equation for probability density $f(z,t)$ with drift velocity $v$:
+    \begin{equation}
+        \frac{\partial f}{\partial t} + v \frac{\partial f}{\partial z} = D_{\text{phys}} \frac{\partial^2 f}{\partial z^2}
+    \end{equation}
+    When the spatial derivative $\partial f / \partial z$ is approximated using a first-order upwind difference (for $v>0$), the Taylor expansion reveals the effective equation being solved is:
+    \begin{equation}
+        \frac{\partial f}{\partial t} + v \frac{\partial f}{\partial z} = \left( D_{\text{phys}} + \frac{1}{2} |v| \Delta z \right) \frac{\partial^2 f}{\partial z^2} + \mathcal{O}(\Delta z^2)
+    \end{equation}
+    The numerical diffusion coefficient is therefore defined as:
+    \begin{equation}
+        D_{\text{num}} \approx \frac{1}{2} |v| \Delta z
+    \end{equation}
+    If $D_{\text{num}} \gg D_{\text{phys}}$, the numerical error dominates the physical behavior, causing the probability distribution to spread artificially or "leak" out of stable potential wells (ponderomotive traps).
+
+    \subsection{Calculation for Current Setup}
+    In the provided simulation, the critical dynamics occur in the vertical ($z$) direction where a weak "lift" force competes against downward drift. We estimate the numerical viscosity using the simulation parameters:
+    \begin{itemize}
+        \item \textbf{Drift Velocity ($v_z$):} The characteristic vertical velocity is driven by the term $\alpha e^z \sin(\xi) + v_0 \cos(\phi)$. Near the stable height $z \approx -1.5$:
+        \[
+        |v_z| \approx \alpha e^{-1.5} + v_0 \approx 0.1(0.22) + 0.01 \approx 0.032
+        \]
+        \item \textbf{Co-Moving Velocity ($v_\xi$):} In the co-moving frame, the relative velocity is the difference between particle drift and wave speed ($c=1$):
+        \[
+        |v_\xi| = |v_x - c| \approx |0.1 - 1.0| = 0.9
+        \]
+    \end{itemize}
+
+    \subsubsection{Scenario A: Coarse Grid (The "Crashing" Case)}
+    Using the initial grid settings of $z \in [-6, 0]$ with $N_z=60$:
+    \[
+    \Delta z = \frac{0 - (-6)}{60} = 0.1
+    \]
+    The numerical diffusion in $z$ is:
+    \begin{equation}
+        D_{\text{num}, z} \approx \frac{1}{2} (0.032) (0.1) = 1.6 \times 10^{-3}
+    \end{equation}
+    Comparing this to the physical diffusion $D_0 = 10^{-5}$:
+    \begin{equation}
+        \frac{D_{\text{num}, z}}{D_0} = \frac{1.6 \times 10^{-3}}{10^{-5}} = \mathbf{160}
+    \end{equation}
+    \textbf{Result:} The solver introduces 160$\times$ more friction than physics dictates, damping out the delicate lift mechanism and causing the "mass drop."
+
+    \subsubsection{Scenario B: Focused Grid (The "Stable" Case)}
+    Using the optimized grid settings of $z \in [-3, 0]$ with $N_z=150$:
+    \[
+    \Delta z = \frac{0 - (-3)}{150} = 0.02
+    \]
+    The numerical diffusion becomes:
+    \begin{equation}
+        D_{\text{num}, z} \approx \frac{1}{2} (0.032) (0.02) = 3.2 \times 10^{-4}
+    \end{equation}
+    While still larger than $D_0$, this reduces the artificial damping by a factor of 5, bringing it below the threshold required for the ponderomotive lift to sustain the particle against the numerical drag.
+
+    \subsection{Parameter Selection Guideline}
+    To ensure physical fidelity in the "slow drift" regime, the grid step $\Delta z$ must be chosen such that the numerical time scale of diffusion is slower than the time scale of the wave driving ($\tau_{\text{wave}} \approx 2\pi$).
+
+    A practical constraint for this system is:
+    \begin{equation}
+        \Delta z \leq \frac{2 \cdot D_{\text{tolerable}}}{|v_{\text{max}}|}
+    \end{equation}
+    Where $D_{\text{tolerable}}$ is an empirical threshold (roughly $5 \times 10^{-4}$ for this specific lift force). This yields the requirement $\Delta z \leq 0.03$, necessitating $N_z \geq 100$ for a domain of height 3.
+\end{document}
