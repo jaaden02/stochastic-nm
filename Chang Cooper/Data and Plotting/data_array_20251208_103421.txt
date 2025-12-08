@@ -1,0 +1,54 @@
+============================================================
+FOKKER-PLANCK SETUP VALIDATION
+============================================================
+Grid: 200×70×20 (0.3 M cells)
+Resolutions: dx=0.905 (Req < 0.8), dz=0.072, dφ=0.331
+Initial Pos: x=0.0, z=-2.0, φ=-0.50π
+Initial Widths: σx=0.05, σz=0.050, σφ=0.100
+----------------------------------------
+============================================================
+VECTORIZED 3D FOKKER-PLANCK SOLVER
+============================================================
+Grid: 200×70×20 = 280,000 cells
+Resolution: dx=0.905, dz=0.072, dφ=0.331
+x in [0, 180], z in [-5, 0], φ in [0, 6.283185307179586]
+Diffusion D0 = 0
+Initial ∫f = 1.000000
+
+Time: t ∈ [0, 800], dt=1.0000e+00, Nt=801
+Total Memory needed: 0.90 GB (float32)
+------------------------------
+CFL Stability Analysis (dt = 1.00e+00)
+------------------------------
+Advection Limits (dt < ...):
+  X:   4.31e+00 (v=2.10e-01)
+  Z:   6.59e-01 (v=1.10e-01)
+  Phi: 5.44e+00 (v=6.08e-02) <--- Check this!
+Diffusion Limits (dt < ...):
+  Phi: inf
+------------------------------
+Combined Max Stable dt: 5.17e-01
+❌ UNSTABLE: dt is 1.9x larger than limit.
+   Probability will leak due to negative overshoots.
+
+Allocating solution array: 9.6 MB
+Starting Solver. BCs: X='open', Z='open'. Steps: 801
+Step 1/800, t=0.0000, ∫f=1.000000
+Step 100/800, t=99.0000, ∫f=1.000022
+Step 200/800, t=199.0000, ∫f=0.734062
+Step 300/800, t=299.0000, ∫f=0.241009
+Step 400/800, t=399.0000, ∫f=0.180971
+Step 500/800, t=499.0000, ∫f=0.164284
+Step 600/800, t=599.0000, ∫f=0.151939
+Step 700/800, t=699.0000, ∫f=0.132694
+Step 800/800, t=799.0000, ∫f=0.103262
+
+============================================================
+✓ Done! Solution shape: (9, 200, 70, 20)
+Final ∫f = 0.103262
+Computation time: 47.72 seconds
+   (0.0596 sec/step, 4.70 Mcells/sec)
+============================================================
+
+Generating summary plots...
+Done
