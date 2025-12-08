@@ -27,3 +27,11 @@
 
 Appendix
 12. rough Ito for SDE -> FP             Jasper
+
+
+
+Jasper/Filip Plots:
+
+- 0.01 falling stone
+- 0.00001 One peak and falling off
+- 
