@@ -3,3 +3,5 @@
 *.gif
 __pycache__/
 .ipynb_checkpoints/
+./Data and Plotting/Average Plots/
+*frame_*.png

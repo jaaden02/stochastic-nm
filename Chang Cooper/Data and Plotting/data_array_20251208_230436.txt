@@ -1,0 +1,46 @@
+============================================================
+FOKKER-PLANCK SETUP VALIDATION
+============================================================
+Grid: 350×70×40 (1.0 M cells)
+Resolutions: dx=0.802 (Req < 0.8), dz=0.101, dφ=0.161
+Initial Pos: x=0.0, z=-2.0, φ=-0.50π
+Initial Widths: σx=0.10, σz=0.203, σφ=0.322
+----------------------------------------
+============================================================
+VECTORIZED 3D FOKKER-PLANCK SOLVER
+============================================================
+Grid: 350×70×40 = 980,000 cells
+Resolution: dx=0.802, dz=0.101, dφ=0.161
+x in [0, 280], z in [-7, 0], φ in [-1.5707963267948966, 4.71238898038469]
+Diffusion D0 = 0.01
+Initial ∫f = 1.000000
+
+Time: t ∈ [0, 6000], dt=1.0000e+00, Nt=6001
+Total Memory needed: 23.52 GB (float32)
+------------------------------
+CFL Stability Analysis (dt = 1.00e+00)
+------------------------------
+Advection Limits (dt < ...):
+  X:   3.82e+00 (v=2.10e-01)
+  Z:   9.22e-01 (v=1.10e-01)
+  Phi: 2.65e+00 (v=6.08e-02) <--- Check this!
+Diffusion Limits (dt < ...):
+  Phi: 1.30e+00
+------------------------------
+Combined Max Stable dt: 4.01e-01
+❌ UNSTABLE: dt is 2.5x larger than limit.
+   Probability will leak due to negative overshoots.
+
+Allocating solution array: 228.0 MB
+Starting Solver. BCs: X='open', Z='open'. Steps: 6001
+Step 1/6000, t=0.0000, ∫f=1.000000
+Step 100/6000, t=99.0000, ∫f=2149.012231
+❌ Instability detected (∫f=2149.0122 > 1.1). DT likely too high.
+
+============================================================
+✓ Done! Solution shape: (2, 350, 70, 40)
+Final ∫f = 2149.012387
+Computation time: 23.14 seconds
+   (0.0039 sec/step, 254.20 Mcells/sec)
+============================================================
+Done
